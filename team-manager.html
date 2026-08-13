@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Team Manager | Game Day Flags</title>
+<link rel="stylesheet" href="styles.css">
+<style>
+.manager{min-height:100vh;background:#f5f7f9;padding:28px}.manager-wrap{width:min(1100px,100%);margin:auto}
+.manager-head{display:flex;justify-content:space-between;gap:18px;align-items:center;margin-bottom:22px}
+.manager-grid{display:grid;grid-template-columns:360px 1fr;gap:20px}
+.box{background:white;border:1px solid #dce3ea;border-radius:16px;padding:22px}
+.box label{display:grid;gap:6px;font-weight:800;margin-bottom:14px}
+.box input,.box select{width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px;font:inherit}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.team-table{width:100%;border-collapse:collapse}.team-table th,.team-table td{padding:10px;border-bottom:1px solid #e5eaf0;text-align:left}
+.delete{border:0;background:#fee2e2;color:#991b1b;border-radius:7px;padding:7px 10px;cursor:pointer}
+.notice{background:#fff7ed;border-left:5px solid #c5162e;padding:14px;margin-bottom:18px}
+#searchManager{margin-bottom:14px;width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:8px}
+@media(max-width:800px){.manager-grid{grid-template-columns:1fr}.manager-head{align-items:flex-start;flex-direction:column}.table-wrap{overflow:auto}}
+</style>
+</head>
+<body>
+<main class="manager">
+<div class="manager-wrap">
+<div class="manager-head"><div><span class="kicker">Version 3</span><h1>Team Manager</h1><p>Add, remove, or edit teams without touching the main JavaScript file.</p></div><a class="button outline" href="index.html">Back to website</a></div>
+<div class="notice"><b>How this works:</b> Make your changes, then click <b>Download teams-data.js</b>. Replace the old teams-data.js file in your website folder and upload a new Cloudflare deployment.</div>
+<div class="manager-grid">
+<section class="box">
+<h2>Add a team</h2>
+<label>School name<input id="name" placeholder="Example: Texas"></label>
+<label>Conference<input id="conf" placeholder="Example: SEC"></label>
+<label>Abbreviation<input id="abbr" maxlength="6" placeholder="Example: TEX"></label>
+<div class="actions"><button id="add" class="button" type="button">Add Team</button><button id="reset" class="button outline" type="button">Reset List</button></div>
+<p id="message" aria-live="polite"></p>
+</section>
+<section class="box">
+<h2>Current teams: <span id="count"></span></h2>
+<input id="searchManager" placeholder="Search team or conference">
+<div class="table-wrap"><table class="team-table"><thead><tr><th>Team</th><th>Conference</th><th>Abbr.</th><th></th></tr></thead><tbody id="rows"></tbody></table></div>
+<div class="actions" style="margin-top:16px"><button id="download" class="button" type="button">Download teams-data.js</button></div>
+</section>
+</div>
+</div>
+</main>
+<script src="teams-data.js"></script>
+<script>
+let list=JSON.parse(JSON.stringify(window.GDF_TEAMS||[]));
+const rows=document.getElementById('rows'),count=document.getElementById('count'),search=document.getElementById('searchManager'),message=document.getElementById('message');
+function render(){
+ const q=search.value.toLowerCase();
+ const shown=list.filter(t=>t.name.toLowerCase().includes(q)||t.conf.toLowerCase().includes(q)||t.abbr.toLowerCase().includes(q));
+ rows.innerHTML='';
+ shown.forEach(t=>{
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td>${t.name}</td><td>${t.conf}</td><td>${t.abbr}</td><td><button class="delete" type="button">Remove</button></td>`;
+  tr.querySelector('button').addEventListener('click',()=>{list=list.filter(x=>!(x.name===t.name&&x.conf===t.conf));render();});
+  rows.appendChild(tr);
+ });
+ count.textContent=list.length;
+}
+document.getElementById('add').addEventListener('click',()=>{
+ const name=document.getElementById('name').value.trim(),conf=document.getElementById('conf').value.trim(),abbr=document.getElementById('abbr').value.trim().toUpperCase();
+ if(!name||!conf||!abbr){message.textContent='Complete all three fields.';return;}
+ if(list.some(t=>t.name.toLowerCase()===name.toLowerCase())){message.textContent='That team is already listed.';return;}
+ list.push({name,conf,abbr});list.sort((a,b)=>a.name.localeCompare(b.name));message.textContent=`Added ${name}.`;render();
+});
+document.getElementById('reset').addEventListener('click',()=>{list=JSON.parse(JSON.stringify(window.GDF_TEAMS||[]));message.textContent='List restored.';render();});
+search.addEventListener('input',render);
+document.getElementById('download').addEventListener('click',()=>{
+ const content='window.GDF_TEAMS = '+JSON.stringify(list,null,2)+';\\n';
+ const blob=new Blob([content],{type:'text/javascript'});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='teams-data.js';a.click();URL.revokeObjectURL(a.href);
+});
+render();
+</script>
+</body></html>

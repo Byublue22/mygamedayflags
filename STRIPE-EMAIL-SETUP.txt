@@ -1,0 +1,80 @@
+GAME DAY FLAGS — STRIPE + AUTOMATIC EMAIL SETUP
+
+This package is coded for:
+- Stripe-hosted Checkout
+- Cloudflare Pages Functions
+- Automatic customer and owner emails through Resend
+- A verified Stripe webhook
+
+DO NOT put secret keys into index.html, script.js, or any public file.
+
+1. STRIPE
+Create or sign in to your Stripe account.
+Use test mode first.
+Get your Stripe Secret Key from Developers > API keys.
+
+2. RESEND
+Create a Resend account.
+Add and verify mygamedayflags.com.
+Create a Resend API key.
+A recommended sender is:
+Game Day Flags <orders@mygamedayflags.com>
+
+3. CLOUDFLARE PAGES SECRETS
+In Cloudflare:
+Workers & Pages > your Pages project > Settings > Variables and Secrets
+
+Add these secrets/variables for Production and Preview:
+STRIPE_SECRET_KEY = your Stripe secret key
+STRIPE_WEBHOOK_SECRET = added after step 4
+RESEND_API_KEY = your Resend API key
+FROM_EMAIL = Game Day Flags <orders@mygamedayflags.com>
+OWNER_EMAIL = mygamedayflags@gmail.com
+SITE_URL = https://mygamedayflags.com
+
+Mark the Stripe and Resend keys as encrypted secrets.
+
+4. STRIPE WEBHOOK
+In Stripe Workbench / Developers > Webhooks, add:
+https://mygamedayflags.com/api/stripe-webhook
+
+Subscribe to:
+checkout.session.completed
+
+Copy the webhook signing secret and save it in Cloudflare as:
+STRIPE_WEBHOOK_SECRET
+
+5. DEPLOY
+Deploy the entire folder to Cloudflare Pages.
+The functions directory must be included.
+
+Important: Cloudflare Pages Functions generally require a Git-integrated Pages project rather than dashboard drag-and-drop deployment. Connect the project to GitHub or deploy using Wrangler if Functions do not appear.
+
+6. TEST
+Use Stripe test mode and Stripe's test card:
+4242 4242 4242 4242
+Any future expiration date
+Any three-digit CVC
+Any postal code
+
+Confirm:
+- Stripe shows a successful test payment
+- Customer receives confirmation
+- mygamedayflags@gmail.com receives the new-order notice
+- Stripe webhook shows HTTP 200
+
+7. GO LIVE
+Replace the test Stripe secret with the live secret.
+Create/register the live webhook endpoint and use its live webhook signing secret.
+Complete a small real transaction and refund it after verification.
+
+FILES ADDED
+functions/api/create-checkout-session.js
+functions/api/stripe-webhook.js
+success.html
+cancel.html
+
+SECURITY
+- Secret keys stay only in Cloudflare encrypted variables.
+- Stripe Checkout handles card details; the website never receives card numbers.
+- Webhook signatures are verified before emails are sent.

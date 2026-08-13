@@ -1,0 +1,16 @@
+GAME DAY FLAGS PRICING UPDATE
+
+Updated:
+- Early Bird: $155 per season
+- Early Bird deadline: August 30
+- Regular Price: $175 per season
+- Regular pricing begins after August 30
+
+Also updated:
+- Website pricing cards
+- Membership plan labels
+- Stripe Checkout amounts
+- Setup documentation
+
+Important:
+If Stripe is still in test mode, test both plans before switching to live mode.
