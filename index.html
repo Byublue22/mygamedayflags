@@ -186,11 +186,16 @@
     <div class="reveal">
       <span class="kicker">Reserve your yard</span><h2>Join the 2026 Season</h2>
       <p>Submit your details and we will confirm your team, address, availability and payment.</p>
-      <div class="selected-plan" id="selectedPlan">Membership plan: Not selected</div>
+      <div class="selected-plan" id="selectedPlan">Membership plan: Early Bird — $155</div>
       <div class="contact"><a href="tel:+18015288697">801-528-8697</a><a href="mailto:mygamedayflags@gmail.com">mygamedayflags@gmail.com</a></div>
     </div>
     <form id="signup" class="signup reveal">
-      <input type="hidden" name="plan" id="planInput">
+      <label>Membership
+        <select name="plan" id="planInput" required>
+          <option value="Early Bird — $155">Early Bird — $155 (sign up by August 30)</option>
+          <option value="Regular — $175">Regular — $175</option>
+        </select>
+      </label>
       <label>Full name<input name="name" required></label>
       <label>Email<input name="email" type="email" required></label>
       <label>Phone<input name="phone" type="tel" required></label>

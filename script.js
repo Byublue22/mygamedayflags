@@ -91,20 +91,17 @@ const observer=new IntersectionObserver(entries=>entries.forEach(e=>{
 }),{threshold:.12});
 document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
 
+
+planInput.addEventListener("change",()=>{
+  selectedPlan.textContent=`Membership plan: ${planInput.value}`;
+});
 document.getElementById("signup").addEventListener("submit",async e=>{
   e.preventDefault();
   const form=e.target;
   const status=document.getElementById("formStatus");
   const payButton=document.getElementById("payButton");
   const data=Object.fromEntries(new FormData(form).entries());
-
-  if(!data.plan){
-    status.textContent="Please choose the Early Bird or Regular membership plan first.";
-    document.getElementById("pricing").scrollIntoView({behavior:"smooth"});
-    return;
-  }
-
-  payButton.disabled=true;
+payButton.disabled=true;
   payButton.textContent="Opening Secure Checkout…";
   status.textContent="Creating your secure Stripe checkout session…";
 

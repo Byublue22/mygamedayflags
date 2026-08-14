@@ -39,3 +39,9 @@ VERSION 8
 - Texas remains the default team.
 - Removed the full grid of every team from the public page.
 - Customers now choose a conference first, then a team from a filtered dropdown.
+
+
+VERSION 9
+- Membership selection is now directly inside the signup form.
+- Early Bird $155 (by August 30) is selected by default.
+- Customers can switch to Regular $175 without scrolling back to pricing.
