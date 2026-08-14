@@ -140,6 +140,28 @@ if(menu && nav){
   nav.querySelectorAll("a").forEach(a => a.addEventListener("click", () => nav.classList.remove("open")));
 }
 
+
+// VERSION 10.1: robust internal navigation
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener("click", event => {
+    const targetId = link.getAttribute("href");
+    if (!targetId || targetId === "#") return;
+
+    const target = document.querySelector(targetId);
+    if (!target) return;
+
+    event.preventDefault();
+    target.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    if (nav) {
+      nav.classList.remove("open");
+    }
+    if (menu) {
+      menu.setAttribute("aria-expanded", "false");
+    }
+  });
+});
+
 window.addEventListener("scroll", () => {
   document.querySelector(".site-header")?.classList.toggle("compact", window.scrollY > 30);
 });

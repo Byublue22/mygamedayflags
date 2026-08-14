@@ -111,3 +111,32 @@
 @media(min-width:641px) and (max-width:900px){
   .after-pay-grid{grid-template-columns:repeat(2,1fr)}
 }
+
+/* VERSION 10.1: NAVIGATION / BUTTON CLICK FIX */
+.site-header,
+.site-header nav,
+.site-header a,
+.hero-content,
+.hero-actions,
+.hero-actions a,
+.early-bird-banner,
+.early-bird-inner,
+.early-bird-inner a {
+  pointer-events: auto !important;
+}
+
+.site-header nav,
+.hero-content,
+.early-bird-inner {
+  position: relative;
+  z-index: 100;
+}
+
+.hero-overlay,
+.hero-glow {
+  pointer-events: none !important;
+}
+
+section[id] {
+  scroll-margin-top: 90px;
+}

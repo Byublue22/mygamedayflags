@@ -54,3 +54,9 @@ VERSION 10 FIXED
 - Texas is the default.
 - Added What Happens After You Pay section.
 - Preserved Stripe checkout and automatic emails.
+
+
+VERSION 10.1 NAV FIX
+- Fixed top navigation and hero buttons.
+- Decorative hero layers can no longer intercept clicks.
+- Added explicit internal-link scrolling for How It Works, Teams, Included, Preview, Pricing, FAQ, and Join.
