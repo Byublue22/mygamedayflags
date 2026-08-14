@@ -1,0 +1,8 @@
+Game Day Flags Version 9.1
+
+This is the stable Version 9 baseline.
+Only the signup membership selector is present:
+- Early Bird — $155 (default)
+- Regular — $175
+
+No other sections, buttons, animations, Stripe checkout logic, or email functions were changed.
