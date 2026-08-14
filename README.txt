@@ -46,10 +46,11 @@ VERSION 9
 - Early Bird $155 (by August 30) is selected by default.
 - Customers can switch to Regular $175 without scrolling back to pricing.
 
-VERSION 10
-- Added Early Bird banner: $155 through August 30 / save $20.
-- Moved Conference + Team selection directly into signup.
-- Texas defaults automatically.
-- Added stronger What's Included section.
+VERSION 10 FIXED
+- Rebuilt JavaScript from scratch with defensive null checks.
+- All page content remains visible even if JavaScript ever fails.
+- Added Early Bird banner.
+- Conference + Team selectors are directly in signup.
+- Texas is the default.
 - Added What Happens After You Pay section.
-- Streamlined signup order for easier conversion.
+- Preserved Stripe checkout and automatic emails.
