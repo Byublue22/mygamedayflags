@@ -35,3 +35,4 @@ VERSION 5
 - See STRIPE-EMAIL-SETUP.txt before deployment.
 Deployment Refresh
 Deployment Refresh1
+Live site deployment
