@@ -33,6 +33,9 @@ VERSION 5
 - Automatic paid-order notice to the owner
 - Payment success and cancel pages
 - See STRIPE-EMAIL-SETUP.txt before deployment.
-Deployment Refresh
-Deployment Refresh1
-Live site deployment
+
+
+VERSION 8
+- Texas remains the default team.
+- Removed the full grid of every team from the public page.
+- Customers now choose a conference first, then a team from a filtered dropdown.

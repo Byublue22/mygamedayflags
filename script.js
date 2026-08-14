@@ -7,16 +7,13 @@ const scheduleData = {
   "Oklahoma":[["Week 1","Schedule pending","TBA"],["Week 2","Schedule pending","TBA"],["Week 3","Schedule pending","TBA"]]
 };
 
-const grid=document.getElementById("teamGrid");
-const search=document.getElementById("teamSearch");
-const conf=document.getElementById("conference");
 const signupTeam=document.getElementById("signupTeam");
 const scheduleTeam=document.getElementById("scheduleTeam");
-let selected="BYU";
+const teamConference=document.getElementById("teamConference");
+const teamSelect=document.getElementById("teamSelect");
+const useSelectedTeam=document.getElementById("useSelectedTeam");
+let selected="Texas";
 
-function fillConferenceFilter(){
-  [...new Set(teams.map(t=>t.conf))].sort().forEach(name=>conf.add(new Option(name,name)));
-}
 function fillTeamSelects(){
   teams.forEach(t=>{
     signupTeam.add(new Option(t.name,t.name));
@@ -25,30 +22,37 @@ function fillTeamSelects(){
   signupTeam.value=selected;
   scheduleTeam.value=selected;
 }
-function renderTeams(){
-  const q=search.value.trim().toLowerCase();
-  const c=conf.value;
-  grid.innerHTML="";
-  const matches=teams.filter(t=>
-    (t.name.toLowerCase().includes(q)||t.abbr.toLowerCase().includes(q)) &&
-    (c==="all"||t.conf===c)
-  );
-  matches.forEach(t=>{
-    const button=document.createElement("button");
-    button.type="button";
-    button.className="team-card"+(t.name===selected?" selected":"");
-    button.innerHTML=`<span class="mark">${t.abbr}</span><b>${t.name}</b><small>${t.conf}</small>`;
-    button.addEventListener("click",()=>{
-      selected=t.name;
-      signupTeam.value=t.name;
-      scheduleTeam.value=t.name;
-      renderTeams();
-      renderSchedule();
-      document.getElementById("join").scrollIntoView({behavior:"smooth"});
-    });
-    grid.appendChild(button);
-  });
-  if(!matches.length) grid.innerHTML='<p class="no-results">No matching team. Use the Team Manager to add it.</p>';
+function fillConferenceTeamSelectors(){
+  teamConference.innerHTML="";
+  const conferences=[...new Set(teams.map(t=>t.conf))].sort();
+  conferences.forEach(c=>teamConference.add(new Option(c,c)));
+
+  const defaultTeam=teams.find(t=>t.name===selected) || teams[0];
+  if(defaultTeam){
+    teamConference.value=defaultTeam.conf;
+  }
+  renderConferenceTeamSelectors();
+}
+
+function renderConferenceTeamSelectors(){
+  const conference=teamConference.value;
+  const conferenceTeams=teams.filter(t=>t.conf===conference).sort((a,b)=>a.name.localeCompare(b.name));
+  teamSelect.innerHTML="";
+  conferenceTeams.forEach(t=>teamSelect.add(new Option(t.name,t.name)));
+
+  if(conferenceTeams.some(t=>t.name===selected)){
+    teamSelect.value=selected;
+  } else if(conferenceTeams.length){
+    teamSelect.value=conferenceTeams[0].name;
+  }
+}
+
+function applySelectedTeam(){
+  selected=teamSelect.value;
+  signupTeam.value=selected;
+  scheduleTeam.value=selected;
+  renderSchedule();
+  syncPreviewTeam();
 }
 function renderSchedule(){
   const team=scheduleTeam.value;
@@ -61,14 +65,17 @@ function renderSchedule(){
     `<div class="game"><time>${g[0]}</time><b>${team} vs. ${g[1]}</b><span class="home">${g[2]}</span></div>`
   ).join("");
 }
-fillConferenceFilter();
 fillTeamSelects();
-renderTeams();
+fillConferenceTeamSelectors();
+renderConferenceTeamSelectors();
 renderSchedule();
 
-search.addEventListener("input",renderTeams);
-conf.addEventListener("change",renderTeams);
 scheduleTeam.addEventListener("change",renderSchedule);
+teamConference.addEventListener("change",renderConferenceTeamSelectors);
+useSelectedTeam.addEventListener("click",()=>{
+  applySelectedTeam();
+  document.getElementById("join").scrollIntoView({behavior:"smooth"});
+});
 
 const menu=document.querySelector(".menu");
 const nav=document.querySelector(".site-header nav");
@@ -140,8 +147,7 @@ scheduleTeam.addEventListener("change",()=>{
   signupTeam.value=team;
   selected=team;
   syncPreviewTeam();
-  renderTeams();
-});
+  });
 syncPreviewTeam();
 
 // Local-only home photo preview.

@@ -1,0 +1,3 @@
+Update applied:
+- Texas is now the default selected team instead of BYU.
+- Customers can still choose any other team.

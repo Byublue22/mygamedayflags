@@ -46,3 +46,39 @@
   .photo-band{min-height:440px}
   .flag-preview{transform:scale(.82);transform-origin:top left}
 }
+
+/* VERSION 8: CONFERENCE + TEAM DROPDOWN SELECTOR */
+.team-selector-panel{
+  max-width:760px;
+  margin:0 auto;
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:16px;
+  align-items:end;
+  padding:24px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  box-shadow:0 16px 38px #081b3410;
+}
+.team-selector-panel .field{
+  display:grid;
+  gap:7px;
+  font-weight:800;
+}
+.team-selector-panel select{
+  width:100%;
+  padding:13px;
+  border:1px solid #cbd5e1;
+  border-radius:9px;
+  font:inherit;
+  background:#fff;
+}
+@media(max-width:760px){
+  .team-selector-panel{
+    grid-template-columns:1fr;
+  }
+  .team-selector-panel .button{
+    width:100%;
+  }
+}

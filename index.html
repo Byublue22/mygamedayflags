@@ -75,12 +75,26 @@
 
 <section id="teams" class="section soft">
   <div class="wrap">
-    <div class="section-head reveal"><span>Choose your team</span><h2>Represent What You Love</h2></div>
-    <div class="team-tools">
-      <input id="teamSearch" placeholder="Search for your team…" aria-label="Search teams">
-      <select id="conference" aria-label="Filter by conference"><option value="all">All conferences</option></select>
+    <div class="section-head reveal">
+      <span>Choose your team</span>
+      <h2>Find Your School</h2>
+      <p>Select a conference first, then choose your team.</p>
     </div>
-    <div id="teamGrid" class="team-grid"></div>
+
+    <div class="team-selector-panel reveal">
+      <label class="field">
+        Conference
+        <select id="teamConference" aria-label="Choose conference"></select>
+      </label>
+
+      <label class="field">
+        Team
+        <select id="teamSelect" aria-label="Choose team"></select>
+      </label>
+
+      <button id="useSelectedTeam" class="button" type="button">Use This Team</button>
+    </div>
+
     <p class="legal-note">Team names are shown for customer selection. School logos and marks are not used unless separately authorized.</p>
   </div>
 </section>
