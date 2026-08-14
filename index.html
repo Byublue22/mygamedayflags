@@ -19,6 +19,14 @@
   </nav>
 </header>
 
+
+<div class="early-bird-banner">
+  <div class="wrap early-bird-inner">
+    <strong>🏈 Early Bird Pricing Ends August 30 — Save $20</strong>
+    <a href="#join">Join for $155</a>
+  </div>
+</div>
+
 <main id="top">
 <section class="hero">
   <div class="hero-overlay"></div>
@@ -76,26 +84,17 @@
 <section id="teams" class="section soft">
   <div class="wrap">
     <div class="section-head reveal">
-      <span>Choose your team</span>
-      <h2>Find Your School</h2>
-      <p>Select a conference first, then choose your team.</p>
+      <span>Pick your school at signup</span>
+      <h2>Conference First. Team Second.</h2>
+      <p>When you join, simply choose your conference and then select your team from the filtered list.</p>
     </div>
-
-    <div class="team-selector-panel reveal">
-      <label class="field">
-        Conference
-        <select id="teamConference" aria-label="Choose conference"></select>
-      </label>
-
-      <label class="field">
-        Team
-        <select id="teamSelect" aria-label="Choose team"></select>
-      </label>
-
-      <button id="useSelectedTeam" class="button" type="button">Use This Team</button>
+    <div class="team-flow reveal">
+      <div><span>1</span><b>Choose Conference</b></div>
+      <div class="flow-arrow">→</div>
+      <div><span>2</span><b>Choose Team</b></div>
+      <div class="flow-arrow">→</div>
+      <div><span>3</span><b>Continue to Payment</b></div>
     </div>
-
-    <p class="legal-note">Team names are shown for customer selection. School logos and marks are not used unless separately authorized.</p>
   </div>
 </section>
 
@@ -162,6 +161,23 @@
   </div>
 </section>
 
+<section class="section value-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span>One membership. Everything handled.</span>
+      <h2>Everything Included in Your Season</h2>
+    </div>
+    <div class="value-grid">
+      <article class="reveal"><span>🚩</span><h3>Flag Included</h3><p>Use of your team flag is included for the season.</p></article>
+      <article class="reveal"><span>📍</span><h3>Pole Included</h3><p>We provide the pole and installation hardware.</p></article>
+      <article class="reveal"><span>🏈</span><h3>Every Regular-Season Game</h3><p>We install before each game and remove it afterward.</p></article>
+      <article class="reveal"><span>📅</span><h3>Schedule Tracking</h3><p>We track game weekends and bye weeks for you.</p></article>
+      <article class="reveal"><span>📦</span><h3>Offseason Storage</h3><p>We collect and store the equipment when the season ends.</p></article>
+      <article class="reveal"><span>🙌</span><h3>No Hassle</h3><p>No reminders, setup, maintenance, or storage on your end.</p></article>
+    </div>
+  </div>
+</section>
+
 <section id="pricing" class="section pricing-section">
   <div class="wrap">
     <div class="section-head light reveal"><span>One price. The whole season.</span><h2>Game Day Club Membership</h2></div>
@@ -185,7 +201,7 @@
   <div class="wrap join-grid">
     <div class="reveal">
       <span class="kicker">Reserve your yard</span><h2>Join the 2026 Season</h2>
-      <p>Submit your details and we will confirm your team, address, availability and payment.</p>
+      <p>Choose your membership, conference, and team right here. Then enter your service information and continue directly to secure payment.</p>
       <div class="selected-plan" id="selectedPlan">Membership plan: Early Bird — $155</div>
       <div class="contact"><a href="tel:+18015288697">801-528-8697</a><a href="mailto:mygamedayflags@gmail.com">mygamedayflags@gmail.com</a></div>
     </div>
@@ -196,16 +212,53 @@
           <option value="Regular — $175">Regular — $175</option>
         </select>
       </label>
-      <label>Full name<input name="name" required></label>
-      <label>Email<input name="email" type="email" required></label>
-      <label>Phone<input name="phone" type="tel" required></label>
-      <label>Service address<input name="address" required></label>
-      <label>Favorite team<select name="team" id="signupTeam"></select></label>
-      <label>Notes<textarea name="notes" rows="3"></textarea></label>
+
+      <label>Conference
+        <select id="signupConference" required></select>
+      </label>
+
+      <label>Favorite team
+        <select name="team" id="signupTeam" required></select>
+      </label>
+
+      <label>Full name
+        <input name="name" required autocomplete="name">
+      </label>
+
+      <label>Service address
+        <input name="address" required autocomplete="street-address">
+      </label>
+
+      <label>Phone
+        <input name="phone" type="tel" required autocomplete="tel">
+      </label>
+
+      <label>Email
+        <input name="email" type="email" required autocomplete="email">
+      </label>
+
+      <label>Notes
+        <textarea name="notes" rows="3" placeholder="Gate code, preferred flag location, or anything else we should know."></textarea>
+      </label>
+
       <button class="button full" type="submit" id="payButton">Continue to Secure Payment</button>
       <p id="formStatus" class="status" aria-live="polite"></p>
       <small>You will be redirected to Stripe’s secure checkout. A confirmation email is sent automatically after successful payment.</small>
     </form>
+  </div>
+</section>
+<section class="section after-pay-section">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <span>After checkout</span>
+      <h2>What Happens After You Pay</h2>
+    </div>
+    <div class="after-pay-grid">
+      <article class="reveal"><span>1</span><h3>Instant Confirmation</h3><p>You receive a confirmation email immediately after payment.</p></article>
+      <article class="reveal"><span>2</span><h3>We Confirm Your Yard</h3><p>We review your address and contact you if we need to confirm the installation location.</p></article>
+      <article class="reveal"><span>3</span><h3>We Track Your Team</h3><p>Your team's regular-season schedule is added to our service calendar.</p></article>
+      <article class="reveal"><span>4</span><h3>You're Game-Day Ready</h3><p>We handle the flag before each game and take it down afterward.</p></article>
+    </div>
   </div>
 </section>
 

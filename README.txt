@@ -45,3 +45,11 @@ VERSION 9
 - Membership selection is now directly inside the signup form.
 - Early Bird $155 (by August 30) is selected by default.
 - Customers can switch to Regular $175 without scrolling back to pricing.
+
+VERSION 10
+- Added Early Bird banner: $155 through August 30 / save $20.
+- Moved Conference + Team selection directly into signup.
+- Texas defaults automatically.
+- Added stronger What's Included section.
+- Added What Happens After You Pay section.
+- Streamlined signup order for easier conversion.

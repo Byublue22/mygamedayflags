@@ -8,52 +8,42 @@ const scheduleData = {
 };
 
 const signupTeam=document.getElementById("signupTeam");
+const signupConference=document.getElementById("signupConference");
 const scheduleTeam=document.getElementById("scheduleTeam");
-const teamConference=document.getElementById("teamConference");
-const teamSelect=document.getElementById("teamSelect");
-const useSelectedTeam=document.getElementById("useSelectedTeam");
 let selected="Texas";
 
 function fillTeamSelects(){
-  teams.forEach(t=>{
-    signupTeam.add(new Option(t.name,t.name));
-    scheduleTeam.add(new Option(t.name,t.name));
-  });
-  signupTeam.value=selected;
-  scheduleTeam.value=selected;
-}
-function fillConferenceTeamSelectors(){
-  teamConference.innerHTML="";
   const conferences=[...new Set(teams.map(t=>t.conf))].sort();
-  conferences.forEach(c=>teamConference.add(new Option(c,c)));
+  signupConference.innerHTML="";
+  conferences.forEach(c=>signupConference.add(new Option(c,c)));
 
-  const defaultTeam=teams.find(t=>t.name===selected) || teams[0];
-  if(defaultTeam){
-    teamConference.value=defaultTeam.conf;
+  const texas=teams.find(t=>t.name==="Texas") || teams[0];
+  if(texas){
+    selected=texas.name;
+    signupConference.value=texas.conf;
   }
-  renderConferenceTeamSelectors();
-}
+  renderSignupTeams();
 
-function renderConferenceTeamSelectors(){
-  const conference=teamConference.value;
-  const conferenceTeams=teams.filter(t=>t.conf===conference).sort((a,b)=>a.name.localeCompare(b.name));
-  teamSelect.innerHTML="";
-  conferenceTeams.forEach(t=>teamSelect.add(new Option(t.name,t.name)));
-
-  if(conferenceTeams.some(t=>t.name===selected)){
-    teamSelect.value=selected;
-  } else if(conferenceTeams.length){
-    teamSelect.value=conferenceTeams[0].name;
-  }
-}
-
-function applySelectedTeam(){
-  selected=teamSelect.value;
-  signupTeam.value=selected;
+  scheduleTeam.innerHTML="";
+  teams.forEach(t=>scheduleTeam.add(new Option(t.name,t.name)));
   scheduleTeam.value=selected;
-  renderSchedule();
-  syncPreviewTeam();
 }
+
+function renderSignupTeams(){
+  const conference=signupConference.value;
+  const list=teams.filter(t=>t.conf===conference).sort((a,b)=>a.name.localeCompare(b.name));
+  signupTeam.innerHTML="";
+  list.forEach(t=>signupTeam.add(new Option(t.name,t.name)));
+
+  if(list.some(t=>t.name===selected)){
+    signupTeam.value=selected;
+  } else if(list.length){
+    signupTeam.value=list[0].name;
+    selected=list[0].name;
+  }
+}
+
+
 function renderSchedule(){
   const team=scheduleTeam.value;
   const games=scheduleData[team]||[
@@ -66,15 +56,22 @@ function renderSchedule(){
   ).join("");
 }
 fillTeamSelects();
-fillConferenceTeamSelectors();
 renderConferenceTeamSelectors();
 renderSchedule();
 
 scheduleTeam.addEventListener("change",renderSchedule);
-teamConference.addEventListener("change",renderConferenceTeamSelectors);
-useSelectedTeam.addEventListener("click",()=>{
-  applySelectedTeam();
-  document.getElementById("join").scrollIntoView({behavior:"smooth"});
+signupConference.addEventListener("change",()=>{
+  renderSignupTeams();
+  scheduleTeam.value=signupTeam.value;
+  selected=signupTeam.value;
+  renderSchedule();
+  syncPreviewTeam();
+});
+signupTeam.addEventListener("change",()=>{
+  selected=signupTeam.value;
+  scheduleTeam.value=selected;
+  renderSchedule();
+  syncPreviewTeam();
 });
 
 const menu=document.querySelector(".menu");
@@ -134,7 +131,7 @@ document.querySelectorAll(".checkout-button").forEach(button=>{
 
 // Keep the preview flag label synchronized with the selected team.
 function syncPreviewTeam(){
-  const team=signupTeam.value || selected || "GDF";
+  const team=signupTeam.value || selected || "Texas";
   const match=teams.find(t=>t.name===team);
   document.getElementById("previewTeam").textContent=match ? match.abbr : team.slice(0,4).toUpperCase();
 }
